@@ -1,5 +1,3 @@
-import 'babel-polyfill'; // eslint-disable-line import/no-extraneous-dependencies
-
 import app from './app';
 
 const PORT = 5000 || process.env.PORT;
