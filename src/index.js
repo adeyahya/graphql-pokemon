@@ -1,6 +1,6 @@
 import app from './app';
 
-const PORT = 5000 || process.env.PORT;
+const PORT = process.env.PORT || 5000;
 
 (async () => {
   await app.listen(PORT);
