@@ -38,7 +38,7 @@
   "scripts": {
     "eslint": "eslint src/*",
     "build-schema": "node -r ./scripts/buildSchema.js",
-    "start": "node -r esm src/index.js",
+    "start": "PORT=$PORT node -r esm src/index.js",
     "dev": "nodemon -r esm src/index.js"
   }
 }
