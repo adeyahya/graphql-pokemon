@@ -4,6 +4,7 @@ import {
   GraphQLInt,
   GraphQLFloat,
   GraphQLList,
+  GraphQLNonNull,
 } from 'graphql';
 import {
   globalIdField,
@@ -77,7 +78,7 @@ const PokemonType = new GraphQLObjectType({
     evolutions: {
       type: new GraphQLList(PokemonType),
       description: 'The evolutions of this Pokémon',
-      resolve: async obj => await getPokemonByEvolutions(obj.evolutions),
+      resolve: async obj => getPokemonByEvolutions(obj.evolutions),
     },
     evolutionRequirements: {
       type: EvolutionRequirementType,
@@ -93,6 +94,22 @@ const PokemonType = new GraphQLObjectType({
       type: GraphQLString,
       resolve: obj =>
         `https://img.pokemondb.net/artwork/${obj.name.toLowerCase().replace(/[&\/\\#,+()$~%.'":*?<>{}]/g, '').replace(' ', '-')}.jpg`,
+    },
+  }),
+});
+
+export const PokemonsType = new GraphQLObjectType({
+  name: 'PokemonList',
+  description: 'list of pokemons paginated',
+  fields: () => ({
+    offset: {
+      type: GraphQLInt,
+    },
+    first: {
+      type: new GraphQLNonNull(GraphQLInt),
+    },
+    items: {
+      type: new GraphQLList(PokemonType),
     },
   }),
 });

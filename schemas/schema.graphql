@@ -84,9 +84,16 @@ type PokemonEvolutionRequirement {
   name: String
 }
 
+# list of pokemons paginated
+type PokemonList {
+  offset: Int
+  first: Int!
+  items: [Pokemon]
+}
+
 # Query any Pokémon by number or name
 type Query {
   query: Query
-  pokemons(first: Int!): [Pokemon]
+  pokemons(first: Int!, offset: Int, after: String): PokemonList
   pokemon(id: String, name: String): Pokemon
 }
