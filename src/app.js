@@ -17,7 +17,7 @@ app
       locations,
       stack,
     }),
-  })
+  }),
 )));
 
 export default app;
