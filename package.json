@@ -37,7 +37,7 @@
   "repository": "https://github.com/lucasbento/graphql-pokemon",
   "scripts": {
     "eslint": "eslint src/*",
-    "build-schema": "node -r ./scripts/buildSchema.js",
+    "build-schema": "node -r esm ./scripts/buildSchema.js",
     "start": "PORT=$PORT node -r esm src/index.js",
     "dev": "nodemon -r esm src/index.js"
   }

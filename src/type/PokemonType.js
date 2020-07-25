@@ -111,6 +111,9 @@ export const PokemonsType = new GraphQLObjectType({
     items: {
       type: new GraphQLList(PokemonType),
     },
+    nextOffset: {
+      type: GraphQLInt,
+    },
   }),
 });
 

@@ -94,6 +94,6 @@ type PokemonList {
 # Query any Pokémon by number or name
 type Query {
   query: Query
-  pokemons(first: Int!, offset: Int, after: String): PokemonList
+  pokemons(first: Int!, offset: Int, nextOffset: Int, after: String): PokemonList
   pokemon(id: String, name: String): Pokemon
 }

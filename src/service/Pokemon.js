@@ -1,4 +1,4 @@
-import pokemons from '../pokemons/pokemons.json';
+import pokemons from "../pokemons/pokemons.json";
 
 function determineOffset(after, offset) {
   if (after) {
@@ -17,18 +17,27 @@ function determineOffset(after, offset) {
 
 export async function getPokemons(args) {
   const offset = determineOffset(args.after, args.offset);
-  const searchedPokemons = pokemons.slice(offset, args.first + offset);
+  let cursorPosition = args.first + offset;
+  cursorPosition =
+    pokemons.length > cursorPosition
+      ? cursorPosition
+      : pokemons.length - cursorPosition < 0
+      ? pokemons.length - (pokemons.length - cursorPosition)
+      : cursorPosition;
+
+  const searchedPokemons = pokemons.slice(offset, cursorPosition);
 
   return {
     items: searchedPokemons,
     first: args.first,
+    nextOffset: cursorPosition >= pokemons.length ? null : cursorPosition,
     offset,
   };
 }
 
 export async function getPokemonById(pokemonId) {
-  const pokemon = pokemons.filter(({ id }) =>
-    parseInt(id, 10) === parseInt(pokemonId, 10),
+  const pokemon = pokemons.filter(
+    ({ id }) => parseInt(id, 10) === parseInt(pokemonId, 10)
   );
 
   return pokemon[0] || null;
@@ -37,8 +46,8 @@ export async function getPokemonById(pokemonId) {
 export async function getPokemonByName(pokemonNameSearch) {
   const pokemonName = pokemonNameSearch.toLowerCase().trim();
 
-  const pokemon = pokemons.filter(({ name }) =>
-    name.toLowerCase() === pokemonName,
+  const pokemon = pokemons.filter(
+    ({ name }) => name.toLowerCase() === pokemonName
   );
 
   if (pokemon) {
@@ -53,12 +62,12 @@ export async function getPokemonByEvolutions(evolutions) {
     return null;
   }
 
-  const pokemonNames = evolutions.map(evolution =>
-    evolution.name.toLowerCase().trim(),
+  const pokemonNames = evolutions.map((evolution) =>
+    evolution.name.toLowerCase().trim()
   );
 
-  const searchedPokemons = pokemons.filter(({ name }) =>
-    pokemonNames.indexOf(name.toLowerCase()) !== -1,
+  const searchedPokemons = pokemons.filter(
+    ({ name }) => pokemonNames.indexOf(name.toLowerCase()) !== -1
   );
 
   return searchedPokemons || null;
